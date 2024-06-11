@@ -26,12 +26,15 @@ runs:
         curl -fsSL https://ollama.com/install.sh | sh
 
         function ollamaServe {
+          echo "start ollama as serve mode begin"
           ollama serve
+          echo "start ollama as serve mode finish"
         }
 
         ollamaServe &
         sleep 3
-        
+
+        echo "start to pull model:llama3"
         ollama --version
         ollama pull llama3
         ollama list
