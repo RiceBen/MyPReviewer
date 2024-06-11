@@ -44,8 +44,10 @@ runs:
         ollama list
         
         for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+          echo $file
           content=$(cat "$file")
           review=$(curl -s http://127.0.0.1:11434/api/generate -d '{"model": "llama3", "prompt": "Review the following file:\n\n```\n'"$content"'\n```", "stream": false}' | jq -r '.response')
+          echo $review
           comment="Ollama Code Review for \`$file\`:\n\n$review"
           echo "$comment" >> ollama_review.txt
         done
