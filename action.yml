@@ -4,7 +4,7 @@ inputs:
   model:
     description: 'Ollama model to use for code review'
     required: true
-    default: 'mistral'
+    default: 'codellama'
 runs:
   using: 'composite'
   steps:
@@ -24,12 +24,14 @@ runs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         curl -fsSL https://ollama.com/install.sh | sh
+        ollama --version
         ollama serve
-        ollama pull codellama
+        ollama pull llama3
+        ollama list
         
         for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
           content=$(cat "$file")
-          review=$(curl -s http://127.0.0.1:11434/api/generate -d '{"model": "${{ inputs.model }}", "prompt": "Review the following file:\n\n```\n'"$content"'\n```", "stream": false}' | jq -r '.response')
+          review=$(curl -s http://127.0.0.1:11434/api/generate -d '{"model": "llama3", "prompt": "Review the following file:\n\n```\n'"$content"'\n```", "stream": false}' | jq -r '.response')
           comment="Ollama Code Review for \`$file\`:\n\n$review"
           echo "$comment" >> ollama_review.txt
         done
