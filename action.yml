@@ -25,6 +25,7 @@ runs:
       run: |
         curl -fsSL https://ollama.com/install.sh | sh
         curl -sS https://webi.sh/gh | sh
+        PATH=~/.local/bin:$PATH
         
         function ollamaServe {
           echo "start ollama as serve mode begin"
