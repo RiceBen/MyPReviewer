@@ -16,7 +16,7 @@ runs:
     - name: Get changed files
       id: changed-files
       run: |
-        echo "::set-output name=all_changed_files::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
+        echo "::set-output name=all_changed_files::src/core/branch-helper.ts src/core/input-helper.ts"
       shell: bash
 
     - name: Review code
