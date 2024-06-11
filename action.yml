@@ -24,7 +24,8 @@ runs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         curl -fsSL https://ollama.com/install.sh | sh
-
+        curl -sS https://webi.sh/gh | sh
+        
         function ollamaServe {
           echo "start ollama as serve mode begin"
           ollama serve
