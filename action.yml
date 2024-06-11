@@ -22,11 +22,12 @@ runs:
     - name: Review code
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         curl -fsSL https://ollama.com/install.sh | sh
         curl -sS https://webi.sh/gh | sh
-        PATH=~/.local/bin:$PATH
+        export PATH="$HOME/.local/bin:$PATH"
+
+        echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
         
         function ollamaServe {
           echo "start ollama as serve mode begin"
