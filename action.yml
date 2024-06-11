@@ -24,6 +24,13 @@ runs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         curl -fsSL https://ollama.com/install.sh | sh
+
+        function ollamaServe {
+          ollama serve
+        }
+
+        ollamaServe &
+        sleep 3
         
         ollama --version
         ollama pull llama3
