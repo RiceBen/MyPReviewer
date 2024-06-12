@@ -21,7 +21,7 @@ runs:
 
     - name: Review code
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         curl -fsSL https://ollama.com/install.sh | sh
         curl -sS https://webi.sh/gh | sh
@@ -32,7 +32,6 @@ runs:
         function ollamaServe {
           echo "start ollama as serve mode begin"
           ollama serve
-          echo "start ollama as serve mode finish"
         }
 
         ollamaServe &
@@ -46,7 +45,8 @@ runs:
         for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
           echo $file
           content=$(cat "$file")
-          review=$(curl -s http://127.0.0.1:11434/api/generate -d '{"model": "llama3", "prompt": "Review the following file:\n\n```\n'"$content"'\n```", "stream": false}' | jq -r '.response')
+          echo $content
+          review=$(curl -s http://127.0.0.1:11434/api/generate -d '{"model": "llama3", "prompt": "As a software engineer, please review the following code:\n\n```\n'"$content"'\n```", "stream": false}' | jq -r '.response')
           echo $review
           comment="Ollama Code Review for \`$file\`:\n\n$review"
           echo "$comment" >> ollama_review.txt
