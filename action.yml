@@ -46,7 +46,7 @@ runs:
           echo $file
           content=$(cat "$file")
           content=${content//\'/\'\'}
-          review=$(curl -s http://127.0.0.1:11434/api/generate -d '{"model": "llama3", "prompt": "As a software engineer, please review the following code:\n\n```\n'"$content"'\n```", "stream": false}' | jq -r '.response')
+          review=$(curl -s http://127.0.0.1:11434/api/generate -d '{"model": "llama3", "prompt": "As a software engineer, please review the following code:\n\n```\n'"${content}"'\n```", "stream": false}' | jq -r '.response')
           echo $review
           comment="Ollama Code Review for \`$file\`:\n\n$review"
           echo "$comment" >> ollama_review.txt
