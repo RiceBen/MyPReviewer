@@ -16,7 +16,9 @@ runs:
     - name: Get changed files
       id: changed-files
       uses: tj-actions/changed-files@v45
+
     - name: List all changed files
+      shell: bash
       env:
         ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
       run: |
