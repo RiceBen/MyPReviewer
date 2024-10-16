@@ -34,6 +34,7 @@ runs:
         curl -sS https://webi.sh/gh | sh
         export PATH="$HOME/.local/bin:$PATH"
 
+        export GITHUB_TOKEN=
         echo ${{ github.token }} | gh auth login --with-token
         
         function ollamaServe {
